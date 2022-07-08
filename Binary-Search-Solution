@@ -1,0 +1,64 @@
+//Intersection of Two Arrays
+//O(nlogn+mlogm) Time
+//O(n+m) Space
+
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        int id1=0,id2=0;
+        sort(nums1.begin(),nums1.end());
+        sort(nums2.begin(),nums2.end());
+        vector<int> res;
+        while(id1<nums1.size() && id2<nums2.size()){
+            if(nums1[id1]>nums2[id2]){
+                id2++;
+            }else if(nums2[id2]>nums1[id1]){
+                id1++;
+            }else{
+                res.push_back(nums1[id1]);
+                id1++;
+                id2++;
+            }
+        }
+        return res;
+    }
+};
+
+//Median of Two Sorted Arrays
+//O(n+m) O(n+m)
+//Currently Improving it to O(log(n)+log(m))
+
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int i1=0,i2=0,n=nums1.size(),m=nums2.size();
+        
+        vector<int> res;
+        while((i1<n || i2<m)){
+            if(i1>=n){
+                res.push_back(nums2[i2]);
+                i2++;
+            }else if(i2>=m){
+                res.push_back(nums1[i1]);
+                i1++;
+            }else{
+                if(nums1[i1]>nums2[i2]){
+                    res.push_back(nums2[i2]);
+                    i2++;
+                }else{
+                    res.push_back(nums1[i1]);
+                    i1++;
+                }
+            }
+        }
+        if((n+m)%2!=0){
+            int num = (m+n)/2;
+            return (double)res[num];
+        }else{
+            int num = (m+n)/2;
+            return (res[num]+res[num-1])/2.0;
+        }
+        
+        return 0.0;
+    }
+};
